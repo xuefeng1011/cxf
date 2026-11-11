@@ -1,150 +1,274 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="color-scheme" content="light"><title>ARCH LAB | 러닝빌더 아키텍처 실습</title>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#122a46"><meta name="color-scheme" content="light">
+<title>MY ARCH LAB 2.0 | 실무로 이해하는 아키텍처</title>
+<meta name="description" content="휴넷 CMS 3.0 러닝빌더 경험을 바탕으로 낙관적 잠금, DDD, Clean Architecture, CQRS를 문제 재현부터 면접까지 배우는 모바일 학습실">
 <style>
-:root{--ink:#172b40;--sub:#5b6c7d;--blue:#2455e3;--line:#dce5ed;--bg:#f6f8fb;--ok:#0f7857;--bad:#ac3540}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;-webkit-text-size-adjust:100%}button,select{font:inherit}button{cursor:pointer}a{color:var(--blue)}.wrap{max-width:1000px;margin:auto;padding:0 17px}.hero{background:linear-gradient(135deg,#132d52,#204582);padding:32px 0 27px;color:white}.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:11px;font-weight:800;opacity:.75}.hero h1{font-size:clamp(25px,5vw,39px);line-height:1.26;letter-spacing:-.9px;margin:10px 0}.hero p{color:#e1eafa;max-width:690px;margin:0;font-size:14px}.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:17px}.chip{font-size:11px;border:1px solid #7d9cc1;border-radius:99px;padding:4px 9px;color:#eff6ff}.tabs{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);overflow:auto}.tabs .wrap{display:flex;gap:5px;white-space:nowrap;align-items:center;min-height:57px}.tab{border:0;background:transparent;color:#42566f;padding:11px 13px;border-radius:9px;font-weight:750;font-size:13px}.tab[aria-current=true]{background:#eaf0ff;color:#1740a5}.intro{padding:22px 0 4px;color:var(--sub);font-size:13px}main{padding-bottom:45px}.lesson{background:white;border:1px solid var(--line);border-radius:18px;margin:16px 0;padding:23px 21px;box-shadow:0 5px 20px #21314c0a}.lesson h2{font-size:clamp(21px,4.7vw,29px);line-height:1.33;letter-spacing:-.6px;margin:5px 0 12px}.lesson h3{font-size:17px;margin:23px 0 8px;line-height:1.42}.lesson p{margin:8px 0;color:#425469}.mini{font-size:12px;color:var(--sub)}.tag{display:inline-block;padding:3px 9px;border-radius:99px;background:#ecf3ff;color:#2350a9;font-size:11px;font-weight:800}.tag.real{background:#dcf7e9;color:#17684f}.call{padding:13px 15px;border-radius:10px;border:1px solid #cdddf2;background:#f2f7ff;color:#234463;margin:15px 0}.call.warn{background:#fff7ec;border-color:#f1d9b5;color:#79521e}.call.good{background:#effaf4;border-color:#b9e5cb;color:#176444}b,strong{color:#1c354f}.call strong{color:inherit}.flow2{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:15px 0}.flow{background:#f8fafc;border:1px solid var(--line);border-radius:13px;padding:14px;min-width:0}.flow.bad{background:#fff8f8;border-color:#efd4d6}.flow.ok{background:#f4fbf7;border-color:#c2e7d3}.flow-title{font-size:12px;font-weight:850;margin:0 0 11px;color:#37516e}.node{text-align:center;padding:11px 7px;border-radius:9px;background:white;border:1px solid #d9e3ed;font-weight:700;line-height:1.45;font-size:13px;overflow-wrap:anywhere}.down{text-align:center;color:#95a6b5;margin:3px 0}.split{display:grid;grid-template-columns:1fr 1fr;gap:13px}.panel{background:#f8fafc;border:1px solid #dce5ed;border-radius:12px;padding:15px}.panel h4{margin:0 0 9px;font-size:14px}.panel p{font-size:13px;margin:0}.muted{font-size:12px;color:var(--sub)}pre{background:#18293f;color:#edf5fd;padding:16px 13px;border-radius:11px;overflow:auto;tab-size:2;font:12px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;max-width:100%;white-space:pre}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.steps{display:flex;gap:8px;flex-wrap:wrap;margin:11px 0}.btn{border:1px solid #ccd9e9;background:white;color:#23405d;border-radius:10px;padding:10px 13px;font-weight:750;min-height:43px}.btn.primary{background:#2455e3;color:white;border-color:#2455e3}.btn:disabled{opacity:.48;cursor:default}.btn.sel{background:#e9f0ff;color:#1a47c2;border-color:#7397eb}.state{padding:14px;border:1px solid #d5e0e9;border-radius:12px;background:#fbfdff}.state strong{display:block;font-size:19px}.state .result{font-size:13px;margin-top:8px}.danger{color:var(--bad)!important}.goodtext{color:var(--ok)!important}.list{padding-left:21px}.list li{margin:6px 0}.scroll{overflow-x:auto}table{border-collapse:collapse;font-size:13px;width:100%;min-width:510px}th,td{border-bottom:1px solid #e4eaf1;padding:10px;text-align:left;vertical-align:top}th{background:#f4f7fb}details{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0}summary{cursor:pointer;font-weight:750}details p{font-size:14px}.footer{text-align:center;font-size:12px;color:#687c90;padding:25px}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}.step-label{font-weight:800;font-size:12px;color:#33599c;margin-bottom:7px}.toc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.toc a{background:white;border:1px solid #dce5ed;color:#29415e;padding:12px;text-decoration:none;border-radius:11px;font-size:12px;font-weight:750} .lesson[hidden]{display:none}
-@media(max-width:560px){.wrap{padding:0 12px}.hero{padding:24px 0}.lesson{padding:17px 13px;border-radius:13px;margin:10px 0}.flow2,.split{grid-template-columns:1fr}.toc{grid-template-columns:1fr 1fr}.flow{padding:13px}.hero p{font-size:13px}.panel{padding:12px}.tab{font-size:12px;padding:10px}.tabs .wrap{padding:0 6px}pre{font-size:11px} }
-</style></head>
-<body><header class="hero"><div class="wrap"><div class="eyebrow">MY ARCH LAB · INTERVIEW READY</div><h1>내가 왜 이렇게 설계했을까?</h1><p>실제 휴넷 CMS 3.0 러닝빌더 경험을 바탕으로 문제 재현 → 원리 → 설계 선택 → Java 코드 → 면접 답변까지 한 번에 학습합니다.</p><div class="chips"><span class="chip">Spring Boot</span><span class="chip">JPA</span><span class="chip">Optimistic Lock</span><span class="chip">DDD</span><span class="chip">Clean Architecture</span><span class="chip">CQRS</span></div></div></header>
-<nav class="tabs" aria-label="학습 챕터"><div class="wrap" id="tabs">
-<button class="tab" data-show="sim" aria-current="true">01 문제 재현</button>
-<button class="tab" data-show="jpa">02 JPA 원리</button>
-<button class="tab" data-show="ddd">03 DDD</button>
-<button class="tab" data-show="clean">04 Clean</button>
-<button class="tab" data-show="cqrs">05 CQRS</button>
-<button class="tab" data-show="interview">06 면접</button>
-</div></nav>
-<main class="wrap"><div class="intro">실무 경험과 교육용 가상 예제는 명확히 구분했습니다. <strong>Java 코드와 흐름도는 HTML에 포함되어 있어 스크립트가 꺼져도 보입니다.</strong></div>
-<section class="lesson" id="sim"><span class="tag real">실무 경험의 문제를 모델링</span><h2>01. 코스를 동시에 편집하면 왜 위험할까?</h2>
-<div class="call good"><strong>확인된 실제 경험</strong><br>러닝빌더에서 같은 코스를 여러 관리자가 동시에 편집해 서로의 변경을 덮는 상황을 방지하려고 낙관적 잠금을 사용했고, JPA Dirty Checking도 활용했습니다. 아래 v7·v8과 HTTP 요청은 학습용 가상 값입니다.</div>
-<p>관리자 A와 B가 같은 코스 <b>Java 기초 과정(v7)</b>을 열고 각각 제목을 수정합니다.</p>
-<div class="split"><div class="panel"><h4>👩‍💻 관리자 A</h4><p>읽은 버전: <b>v7</b><br>새 제목: <b>Java 실무 과정</b></p></div><div class="panel"><h4>👨‍💻 관리자 B</h4><p>읽은 버전: <b>v7</b><br>새 제목: <b>Java 입문 과정</b></p></div></div>
-<h3>직접 저장을 실행해 보세요</h3>
-<div class="steps" id="modes"><button class="btn" data-mode="none">잠금 없음</button><button class="btn" data-mode="only">@Version만 사용</button><button class="btn sel" data-mode="safe">편집 버전 검사 + @Version</button></div>
-<div class="state" aria-live="polite"><div class="step-label" id="stepname">초기 상태 · 두 관리자가 v7을 읽음</div><strong id="dbtitle">Java 기초 과정</strong><div class="muted" id="dbversion">DB version 7</div><div class="result" id="result">관리자 A가 먼저 저장하도록 진행하세요.</div></div>
-<div class="steps"><button class="btn" id="reset">↺ 초기화</button><button class="btn primary" id="next">① A 저장 →</button></div>
-<div class="call warn"><b>핵심 함정</b><br>웹에서 오래 열어둔 편집 화면은 <code>@Version</code>만 붙여서는 항상 보호되지 않습니다. 서버가 요청마다 최신 엔티티를 조회한 뒤 오래된 화면의 값을 복사하면 정상 갱신으로 처리될 수 있습니다. 편집 시작 시점의 버전을 함께 전달해 검증해야 합니다.</div>
-<div class="flow2"><div class="flow bad"><div class="flow-title">문제 구조</div><div class="node">A·B 모두 v7 조회</div><div class="down">↓</div><div class="node">A v8 저장</div><div class="down">↓</div><div class="node">B가 오래된 제목 저장</div><div class="down">↓</div><div class="node">A 변경이 덮일 위험</div></div><div class="flow ok"><div class="flow-title">개선 구조</div><div class="node">화면에 version 7 전달</div><div class="down">↓</div><div class="node">A 저장 후 DB v8</div><div class="down">↓</div><div class="node">B의 expectedVersion=7</div><div class="down">↓</div><div class="node">충돌 감지 · 409 응답</div></div></div>
+:root{--bg:#f4f7fb;--ink:#152d46;--sub:#58708b;--line:#dce5ef;--brand:#2456df;--success:#0d8063;--danger:#b23d4d;--gold:#986020}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:76px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.74 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;-webkit-text-size-adjust:100%}a{color:var(--brand)}button,textarea{font:inherit}button{cursor:pointer}.container{max-width:990px;margin:auto;padding:0 18px}header{background:linear-gradient(145deg,#11263f,#1c4877);color:#f5faff;padding:34px 0 32px}header h1{font-size:clamp(26px,5vw,39px);letter-spacing:-1.1px;line-height:1.26;margin:9px 0 14px}header p{color:#d6e7fa;max-width:700px;margin:0}.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9ac6f7;font-weight:800}.pills{display:flex;flex-wrap:wrap;gap:7px;margin:17px 0 0}.pill{border:1px solid #759bbf;color:#dfecff;border-radius:50px;padding:3px 10px;font-size:11px}.subnav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:10;overflow-x:auto;box-shadow:0 2px 12px #1d3c5e09}.subnav .container{display:flex;align-items:center;gap:5px;min-height:56px;white-space:nowrap}.subnav a{font-size:12px;font-weight:750;text-decoration:none;color:#32506f;padding:10px 11px;border-radius:10px}.subnav a:focus-visible,.subnav a:hover{background:#eaf0fd;color:#1745b5}main{padding:16px 0 48px}.card{background:#fff;border:1px solid var(--line);box-shadow:0 5px 24px #17314f08;border-radius:18px;padding:23px;margin:15px 0}.card h2{font-size:clamp(22px,4.6vw,29px);line-height:1.35;margin:8px 0 13px;letter-spacing:-.5px}.card h3{font-size:18px;margin:27px 0 10px;letter-spacing:-.2px}.card h4{margin:10px 0 7px;font-size:15px}.card p{color:#465d76;margin:9px 0}.card ul,.card ol{padding-left:22px}.card li{margin:6px 0}.topline{border-top:1px solid var(--line);margin-top:23px;padding-top:20px}.muted{color:var(--sub)!important}.sm{font-size:12px}.tiny{font-size:11px}.strong{font-weight:800}.label{font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#50739c}.tag{font-size:11px;font-weight:800;border-radius:30px;padding:4px 9px;display:inline-block;background:#e8efff;color:#2453aa}.tag.real{background:#ddf5e9;color:#126d53}.tag.sim{background:#fff0d9;color:#8b5616}.callout{background:#f0f5fe;border-left:4px solid #4d78d9;border-radius:11px;padding:14px 15px;margin:14px 0;font-size:14px;color:#324e70}.callout.good{background:#effaf5;border-color:#22a06e;color:#155f4b}.callout.warn{background:#fff8ec;border-color:#cf9341;color:#74501c}.callout.bad{background:#fff3f4;border-color:#c64e60;color:#8c3442}.callout strong{color:inherit}.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.mini-card{border:1px solid var(--line);border-radius:13px;padding:14px;background:#f9fbfd;min-width:0}.mini-card b{display:block;margin-bottom:5px}.mini-card p{font-size:13px;margin:5px 0}.mini-card.err{background:#fff7f7;border-color:#efd1d6}.mini-card.ok{background:#f3faf7;border-color:#bde2ce}.lane{border:1px solid #d6e3ef;background:#f8fbff;border-radius:14px;padding:14px;min-width:0}.lane.err{background:#fff7f7;border-color:#efd2d6}.lane.ok{background:#f3fbf6;border-color:#b9dfc9}.lane h4{font-size:13px;margin:0 0 10px}.node{border:1px solid #d8e3ed;border-radius:10px;background:white;text-align:center;font-size:13px;line-height:1.5;font-weight:750;padding:12px 8px;overflow-wrap:anywhere}.arrow{text-align:center;color:#6c88a5;font-weight:850;padding:5px}.stage{border-radius:13px;border:1px solid #d6e3ef;padding:16px;background:#f9fbff}.stage .db{font-size:21px;font-weight:850;color:#1d416d;line-height:1.35}.status{font-size:13px;margin-top:10px;color:#415c76}.success{color:var(--success)!important}.danger{color:var(--danger)!important}.buttons{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.btn{border:1px solid #bfcfe2;border-radius:11px;background:#fff;color:#2e4967;padding:10px 13px;min-height:43px;font-weight:750;line-height:1.35}.btn.primary{background:#2456df;border-color:#2456df;color:#fff}.btn.selected{background:#e7efff;border-color:#6992e5;color:#1644af}.btn:disabled{opacity:.46;cursor:default}.btn:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #73a7ff;outline-offset:2px}pre{max-width:100%;overflow:auto;background:#15283e;color:#e8f1ff;border-radius:12px;padding:17px 15px;font:12px/1.72 ui-monospace,SFMono-Regular,Consolas,Menlo,monospace;tab-size:2;margin:10px 0 17px;white-space:pre}code{font-family:ui-monospace,SFMono-Regular,Consolas,Menlo,monospace}p code,td code,li code{background:#eaf1f9;border-radius:5px;padding:2px 4px;font-size:.9em;color:#264a74}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:590px;font-size:13px}th,td{border-bottom:1px solid #e0e8f0;padding:12px 10px;text-align:left;vertical-align:top}th{background:#f1f5fa;color:#34516f}table tr:last-child td{border:0}details{padding:14px 15px;border:1px solid #dae5ee;background:#fbfcff;border-radius:11px;margin:10px 0}summary{font-weight:750;cursor:pointer}details p{font-size:14px}textarea{width:100%;min-height:120px;resize:vertical;border:1px solid #ccd9e5;border-radius:12px;padding:13px;background:#fff;color:#17304a}.chapter-no{display:inline-block;color:#2456df;font-size:12px;font-weight:900}.end{border-top:1px solid #dfe7ee;margin:30px 0 0;text-align:center;padding:24px 0;color:#607791;font-size:12px}.progressbar{display:flex;gap:5px;max-width:450px;margin-top:20px}.progressbar div{flex:1;height:5px;background:#547ba4;border-radius:10px}.checklist label{display:flex;gap:10px;align-items:flex-start;border-bottom:1px solid #e8edf3;padding:10px 0;font-size:14px}.checklist input{margin-top:6px;accent-color:#2456df}.caption{font-size:12px;color:#667c93}.two-ver{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:12px 0}.two-ver div{padding:11px;background:#f2f6fd;border:1px solid #d8e4f2;border-radius:11px;text-align:center;font-size:12px}.two-ver b{display:block;font-size:14px;color:#2853a5}.quiz-box{padding:13px 15px;border:1px solid var(--line);background:#f8fafc;border-radius:12px} .sim-note{font-size:12px;color:#6d7d8e;margin:5px 0}
+@media(max-width:620px){.container{padding:0 12px}header{padding:26px 0 25px}.subnav .container{padding:0 6px;min-height:53px}.subnav a{padding:9px 10px}.card{padding:17px 13px;margin:11px 0;border-radius:14px}.card h3{font-size:16px}.cols,.cols3{grid-template-columns:1fr}.cols3.compact{grid-template-columns:repeat(2,minmax(0,1fr))}.mini-card{padding:12px}.two-ver div{padding:7px 4px;font-size:11px}.two-ver b{font-size:12px}pre{font-size:11px;padding:14px 11px}.btn{font-size:13px}.subnav a{font-size:12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header><div class="container"><div class="eyebrow">MY ARCH LAB · PRACTICE FIRST</div><h1>내가 왜 그렇게 설계했는지<br>설명할 수 있는 개발자 되기</h1><p>휴넷 CMS 3.0 러닝빌더 경험을 출발점으로 문제 재현 → 원인 → 설계 선택 → Java·SQL → 검증 → 면접 답변까지 실습하는 아키텍처 학습실입니다.</p><div class="pills"><span class="pill">실무 경험 + 가상 실험 분리</span><span class="pill">모바일 최적화</span><span class="pill">Java / Spring Boot / JPA</span><span class="pill">4개 집중 챕터</span></div><div class="progressbar"><div></div><div></div><div></div><div></div></div></div></header>
+<nav class="subnav" aria-label="학습 챕터"><div class="container"><a href="#overview">시작</a><a href="#lock">01 낙관적 잠금</a><a href="#ddd">02 DDD</a><a href="#clean">03 Clean</a><a href="#cqrs">04 CQRS</a><a href="#interview">면접 연습</a></div></nav>
+<main class="container">
+<section class="card" id="overview"><span class="tag real">학습 기준</span><h2>기술 이름부터 외우지 않습니다</h2>
+<p>이 사이트는 매번 <b>문제가 무엇인지 → 왜 생기는지 → 어떤 대안이 있는지 → 왜 선택했는지 → 무엇을 검증할지</b>로 설명합니다.</p>
+<div class="cols">
+<div class="mini-card ok"><b>✅ 확인된 실무 경험</b><p>러닝빌더 동일 코스 동시 편집 덮어쓰기 방지를 위한 낙관적 잠금, JPA 변경 감지 활용. CMS 3.0 콘텐츠/코스 버전 관리, Product API 및 이관 경험.</p></div>
+<div class="mini-card"><b>🧪 실습용 가상 구현</b><p>코스 ID 100, v7·v8, HTTP expectedVersion, 409 응답, 세부 Aggregate 모델, Spring Boot 코드·테스트. 실제 구현했다고 단정하지 않습니다.</p></div>
+</div>
+<h3>4개 챕터에서 해결할 질문</h3>
+<div class="cols3 compact"><div class="mini-card"><b>01 낙관적 잠금</b><p>동시 편집과 오래된 화면의 덮어쓰기를 어떻게 막을까?</p></div><div class="mini-card"><b>02 DDD</b><p>Course와 Lesson 중 누가 변경 규칙을 지켜야 할까?</p></div><div class="mini-card"><b>03 Clean Architecture</b><p>DB를 바꿔도 업무 규칙을 보존할 수 있을까?</p></div><div class="mini-card"><b>04 CQRS</b><p>편집 중인 코스와 학습자가 보는 코스를 왜 분리할까?</p></div></div>
 </section>
-<section class="lesson" id="jpa"><span class="tag">실습 코드 · 실제 코드 아님</span><h2>02. Dirty Checking vs @Version</h2><p><b>Dirty Checking</b>은 영속 상태 변경을 Flush할 때 DB에 반영하는 메커니즘입니다. <b>@Version</b>은 변경 시 이전 버전이 유지돼 있는지 확인해 충돌을 감지합니다.</p>
+<section class="card" id="lock"><span class="chapter-no">CHAPTER 01</span> <span class="tag real">실무 문제 출발</span><h2>낙관적 잠금 · 덮어쓰기를 막는 설계</h2>
+<p><b>상황:</b> 관리자가 하나의 코스를 오랫동안 편집합니다. 같은 코스를 다른 관리자가 수정하고 먼저 저장하면, 나중에 저장하는 사람의 오래된 입력이 기존 변경을 덮을 수 있습니다.</p>
+<div class="cols"><div class="mini-card err"><b>위험한 흐름</b><p>A와 B가 모두 v7 조회 → A가 제목 수정 저장 → B가 이전 화면의 제목을 저장 → A 변경 손실</p></div><div class="mini-card ok"><b>설계 목표</b><p>편집 중에 DB 락을 오래 유지하지 않으면서, 저장 시점에 이전 버전과의 충돌을 검증해 조용한 덮어쓰기를 막습니다.</p></div></div>
+<h3>1-1. 직접 문제를 재현하세요</h3>
+<p class="sm muted">아래는 실제 DB가 아니라 원리를 설명하는 브라우저 시뮬레이션입니다.</p>
+<div class="cols"><div class="mini-card"><b>👩 관리자 A</b><p>열어본 코스: v7<br>수정할 제목: <b>Java 실무 과정</b></p></div><div class="mini-card"><b>👨 관리자 B</b><p>열어본 코스: v7<br>수정할 제목: <b>Java 입문 과정</b></p></div></div>
+<div class="buttons" role="group" aria-label="동시성 제어 방식"><button class="btn" data-mode="none">잠금 없음</button><button class="btn" data-mode="jpa">@Version만</button><button class="btn selected" data-mode="both">편집 버전 + @Version</button></div>
+<div class="stage" aria-live="polite"><div class="label" id="sim-stage">시작 · 두 관리자가 v7 조회</div><div class="db" id="sim-title">Java 기초 과정</div><div class="sm muted" id="sim-version">DB version 7</div><div class="status" id="sim-result">① A 저장을 눌러 진행해 보세요.</div></div>
+<div class="buttons"><button class="btn" id="sim-reset">↺ 다시 하기</button><button class="btn primary" id="sim-next">① A 저장 →</button></div>
+<div class="callout warn"><strong>중요: @Version만으로 모든 웹 편집이 안전해지지 않습니다.</strong><br>서버가 매 HTTP 저장 요청마다 최신 엔티티를 읽고 오래된 화면 값을 적용하면, JPA는 그것을 정상적인 새 변경으로 취급할 수 있습니다. 편집 시작 시점의 버전을 클라이언트에서 보내고 비교하는 방식을 함께 고려해야 합니다.</div>
+<h3>1-2. 왜 둘의 역할이 다를까?</h3>
+<div class="scroll"><table><thead><tr><th>기능</th><th>무엇을 하는가</th><th>무엇을 자동으로 보장하지 않는가</th></tr></thead><tbody><tr><td>Dirty Checking</td><td>영속 엔티티의 변경을 Flush 시 SQL로 반영</td><td>브라우저의 오래된 작업 감지</td></tr><tr><td>JPA <code>@Version</code></td><td>읽은 버전에 기반한 동시 DB UPDATE 충돌 검사</td><td>최신 엔티티를 재조회한 뒤 이전 화면 값을 적용하는 실수</td></tr><tr><td>expectedVersion 검증</td><td>편집 시작 당시 화면 버전과 현재 DB 버전 비교</td><td>검사 직후 또 다른 트랜잭션이 수정하는 경쟁 상태</td></tr><tr><td>두 검증 함께</td><td>오래된 화면 + 동시 DB 경합 모두 검사</td><td>충돌 후 자동 병합이나 사용자 경험까지 해결하지는 않음</td></tr></tbody></table></div>
+<h3>1-3. 코드를 아주 작게 나눠 이해</h3>
+<div class="label">① JPA 엔티티</div>
 <pre><code>@Entity
 class CourseJpaEntity {
   @Id Long id;
-  @Version Long version;
+  @Version Long version;       // 동시 갱신 확인
   String title;
 
-  void rename(String title) {
+  void rename(String title) {  // 상태 변경
     if (title == null || title.isBlank())
       throw new IllegalArgumentException("제목 필수");
     this.title = title;
   }
 }</code></pre>
+<div class="label">② Application Service · 학습용 핵심 구현</div>
 <pre><code>@Transactional
 public long edit(long id, long expectedVersion, String title) {
   CourseJpaEntity course = repo.findById(id).orElseThrow();
-
-  // 오래된 웹 화면의 버전을 따로 검증
-  if (!Objects.equals(course.version, expectedVersion))
+  if (!Objects.equals(course.getVersion(), expectedVersion))
     throw new StaleCourseEditException();
 
   course.rename(title); // Dirty Checking 대상
-  repo.flush();         // @Version 충돌 검사
-  return course.version;
+  repo.flush();         // SQL / @Version 충돌 확인
+  return course.getVersion();
 }</code></pre>
-<div class="call">실제 예제에서는 필드 접근자, Repository, 예외 클래스 등 일부 보일러플레이트를 생략했습니다. <b>Flush는 Commit이 아닙니다.</b> 낙관적 잠금이 충돌하면 트랜잭션은 롤백됩니다.</div>
-<h3>SQL로 보는 핵심</h3><pre><code>UPDATE course
+<p class="caption">설명용 간소화 코드입니다. Repository, Getter, Exception 등 보일러플레이트는 생략했습니다. <code>flush()</code>는 Commit이 아니므로 이후 트랜잭션 실패 시 롤백됩니다.</p>
+<div class="label">③ UPDATE가 실제로 지키는 조건</div>
+<pre><code>UPDATE course
 SET title = 'Java 실무 과정', version = 8
 WHERE id = 100 AND version = 7;
 
--- A: 1건 성공, version 8
--- B: 같은 version 7로 UPDATE 시 0건 → 충돌</code></pre>
-<h3>실제 테스트에서 확인할 것</h3>
-<div class="scroll"><table><tr><th>테스트</th><th>예상 결과</th></tr><tr><td>예전 화면 v7으로 저장, DB v8</td><td>StaleCourseEditException</td></tr><tr><td>두 트랜잭션이 같은 v7 읽고 업데이트</td><td>하나만 성공, 다른 쪽 충돌</td></tr><tr><td>중간에 오류 발생</td><td>트랜잭션 전체 롤백</td></tr><tr><td>자식 Lesson만 수정</td><td>부모 Course 버전 자동 증가 여부 확인 필요</td></tr></table></div>
+-- A: 1행 UPDATE → version 8
+-- B: 예전 version 7로 UPDATE → 0행 → 충돌</code></pre>
+<h3>1-4. 놓치기 쉬운 여섯 가지 장애 상황</h3>
+<details open><summary>① 같은 코스 제목을 두 명이 동시에 수정</summary><p>같은 v7을 읽은 별도 트랜잭션 두 개가 서로 다른 제목을 UPDATE하면 한쪽만 성공하도록 <code>@Version</code> 충돌을 검사합니다. 실패한 트랜잭션은 롤백되어야 합니다.</p></details>
+<details><summary>② 브라우저 화면을 10분 열어두고 저장</summary><p>새 HTTP 요청의 트랜잭션은 최신 v8을 읽을 수 있으므로, 옛 화면의 expectedVersion=7을 추가로 검사해야 합니다. 보통 충돌 응답을 반환하고 변경 내용을 비교하게 합니다.</p></details>
+<details><summary>③ A는 1번, B는 3번 차시를 수정</summary><p>부모 Course 단위 버전을 함께 증가시키면 의도적으로 충돌을 발생시킵니다. 서로 독립된 Lesson 버전을 쓰면 불필요한 충돌을 줄일 수 있지만 전체 코스 불변식 보호가 어려워집니다.</p></details>
+<details><summary>④ Lesson만 수정했는데 부모 Course 버전은 그대로</summary><p>자식이 별도 엔티티인 경우 부모 버전이 자동 증가한다고 가정하지 마세요. 필요하면 부모 변경 경로에서 <code>OPTIMISTIC_FORCE_INCREMENT</code> 등 명시적 증가 정책을 검토합니다.</p></details>
+<details><summary>⑤ JPQL Bulk UPDATE를 직접 실행</summary><p>일반적인 영속 엔티티 변경 감지와 버전 검사를 우회할 수 있습니다. Bulk UPDATE를 허용한다면 버전 조건, 영향 행 수, 영속성 컨텍스트 동기화를 별도로 처리해야 합니다.</p></details>
+<details><summary>⑥ 충돌 후 자동으로 다시 저장</summary><p>무조건 재시도하면 사용자 B의 오래된 의도대로 A의 값을 결국 덮을 수 있습니다. 최신 값을 다시 보여주고 병합·재수정 여부를 사용자에게 묻는 정책이 필요합니다.</p></details>
+<h3>1-5. 대안을 선택하는 근거</h3>
+<div class="scroll"><table><thead><tr><th>선택</th><th>적합한 조건</th><th>감수할 비용</th></tr></thead><tbody><tr><td>낙관적 잠금</td><td>충돌이 드문 관리 화면, 장시간 편집</td><td>충돌시 재확인 UX 필요</td></tr><tr><td>비관적 잠금</td><td>짧은 트랜잭션에서 높은 경합</td><td>잠금 대기·데드락·처리량</td></tr><tr><td>DB 조건부 UPDATE</td><td>단순 원자적 상태 변경</td><td>업무 규칙이 SQL에 분산될 수 있음</td></tr><tr><td>필드별 병합</td><td>독립된 필드를 자주 협업 수정</td><td>충돌 정의, UI, 병합 알고리즘</td></tr></tbody></table></div>
+<h3>1-6. 어떤 테스트가 있어야 설계를 믿을까?</h3>
 <pre><code>@Test
-void 오래된_편집은_저장할수없다() {
-  // 독립 트랜잭션을 사용하는 통합 테스트 전제
-  long v7 = loadVersion(100L);
-  service.edit(100L, v7, "Java 실무 과정"); // v8
+void 오래된_편집_화면은_거절한다() {
+  long v7 = getVersion(100L);
+  service.edit(100L, v7, "Java 실무 과정"); // version 증가
   assertThrows(StaleCourseEditException.class,
-      () -> service.edit(100L, v7, "Java 입문 과정"));
-  assertEquals("Java 실무 과정", loadTitle(100L));
+      () -&gt; service.edit(100L, v7, "Java 입문 과정"));
+  assertEquals("Java 실무 과정", getTitle(100L));
 }</code></pre>
-<p class="mini">병렬 트랜잭션 충돌 자체는 CountDownLatch + 독립 트랜잭션 + PostgreSQL(Testcontainers)로 별도 검증하세요. 위 코드는 설명용 테스트 골격입니다.</p>
+<p class="caption">통합 테스트 골격입니다. 실제 실행에는 고유한 테스트 데이터, 예외 구현, 독립 트랜잭션이 필요합니다. 아래는 추가로 반드시 검증해야 하는 항목입니다.</p>
+<div class="checklist"><label><input type="checkbox"> 각 요청을 독립 트랜잭션으로 수행하고 한쪽만 성공하는지 확인</label><label><input type="checkbox"> 실패한 트랜잭션이 Course와 Lesson을 모두 롤백하는지 확인</label><label><input type="checkbox"> 클라이언트의 오래된 expectedVersion을 거절하는지 확인</label><label><input type="checkbox"> 자식 Lesson 변경 때 부모 version의 정책이 기대대로 동작하는지 확인</label><label><input type="checkbox"> 실제 PostgreSQL / Testcontainers 환경에서 경합 테스트</label></div>
 </section>
-<section class="lesson" id="ddd"><span class="tag">DDD 사고법</span><h2>03. Aggregate 경계를 왜 정해야 할까?</h2>
-<p>코스 전체 편집 규칙이 하나의 일관성 경계라면 <b>Course</b>가 Aggregate Root가 될 수 있습니다. 하지만 서로 독립인 차시 편집까지 코스 전체로 잠그면 불필요한 충돌이 늘어납니다.</p>
-<div class="flow2"><div class="flow ok"><div class="flow-title">코스 전체가 하나의 충돌 경계</div><div class="node">Course v7</div><div class="down">↓</div><div class="node">Lesson 1 · 2 · 3</div><div class="down">↓</div><div class="node">전체 구성·발행 규칙 보호</div></div><div class="flow"><div class="flow-title">차시별 독립 버전</div><div class="node">Lesson 1 v3</div><div class="down">↕</div><div class="node">Lesson 3 v5</div><div class="down">↓</div><div class="node">독립 편집 충돌 감소</div></div></div>
-<div class="call warn"><b>JPA 함정:</b> <code>Lesson</code>이 별도 엔티티라면 자식의 필드 수정이 부모 <code>Course.version</code>을 자동으로 증가시키지 않을 수 있습니다. 전체 코스의 보호가 목표라면 부모 버전 증가를 명시적으로 보장해야 합니다.</div>
-<pre><code>entityManager.lock(
-  courseEntity,
-  LockModeType.OPTIMISTIC_FORCE_INCREMENT
-);</code></pre>
-<p>이 선택은 동시 편집 편의성과 전체 코스 정합성의 균형입니다. 차시 순서, 필수 학습 구성, 발행 조건을 하나의 규칙으로 보호해야 하는지에 따라 경계가 바뀝니다.</p>
-<details><summary>면접 질문: Aggregate는 왜 필요하나요?</summary><p>함께 일관되게 지켜야 하는 비즈니스 불변식의 경계를 정하기 위해서입니다. 코스 발행 조건처럼 여러 차시에 걸친 규칙을 어디서 최종 검증할지 명확하게 만듭니다.</p></details>
+<section class="card" id="ddd"><span class="chapter-no">CHAPTER 02</span> <span class="tag sim">실무에서 출발한 모델링 연습</span><h2>DDD · 코스 규칙은 누가 책임질까?</h2>
+<p><b>문제:</b> Controller, CourseService, ProductService 곳곳에 '발행 가능한 코스' 판단 규칙이 중복되면 한 곳만 고쳤을 때 모순이 생깁니다. DDD는 업무 용어와 규칙의 경계를 찾는 데 집중합니다.</p>
+<div class="cols"><div class="lane"><h4>업무 경계: 콘텐츠 제작</h4><div class="node">Content / Media</div><div class="arrow">↓ 콘텐츠 참조</div><div class="node">Learning Builder / CourseDraft</div></div><div class="lane"><h4>업무 경계: 제공·학습</h4><div class="node">PublishedCourse / Product API</div><div class="arrow">↓ 발행 버전</div><div class="node">Learning / Enrollment</div></div></div>
+<div class="callout"><strong>용어 구분:</strong> CMS에서 편집 중인 Course와 학습자가 소비하는 PublishedCourse는 같은 '코스'라도 책임과 상태 규칙이 다를 수 있습니다. 위 경계는 학습용 모델링안입니다.</div>
+<h3>2-1. 먼저 비즈니스 규칙을 찾아보세요</h3>
+<div class="scroll"><table><thead><tr><th>요구사항</th><th>담당할 책임의 후보</th><th>왜?</th></tr></thead><tbody><tr><td>코스 제목은 빈 값 불가</td><td>CourseDraft Domain</td><td>어떤 입력 경로에서도 유효한 제목 유지</td></tr><tr><td>코스 발행에는 차시가 필요</td><td>Course Aggregate</td><td>코스 전체 불변식</td></tr><tr><td>코스 ID 형식은 숫자</td><td>Web Adapter</td><td>HTTP 요청의 형식 검증</td></tr><tr><td>관리자에게 편집 권한이 있는가</td><td>Application + 인가 정책</td><td>행위자에 대한 권한 조율</td></tr><tr><td>발행본은 기존 학습자를 보호</td><td>발행·학습 버전 정책</td><td>시점과 도메인 간 계약 관리</td></tr></tbody></table></div>
+<h3>2-2. Aggregate의 잠금 범위를 선택하세요</h3>
+<div class="buttons" role="group" aria-label="Aggregate 경계"><button class="btn selected" data-scope="course">Course 단위</button><button class="btn" data-scope="lesson">Lesson 단위</button></div>
+<div class="stage"><div class="label">편집 실험: A=1번 차시, B=3번 차시</div><div class="db" id="scope-title">코스 전체 버전이 충돌</div><div class="status" id="scope-body">전체 차시의 일관성을 보호하는 대신, 서로 다른 차시를 수정해도 충돌이 날 수 있습니다.</div></div>
+<div class="callout warn"><strong>설계의 균형:</strong> Aggregate가 지나치게 크면 경합과 로딩 비용이 증가하고, 너무 잘게 나누면 여러 객체에 걸친 불변식을 하나의 트랜잭션에서 보장하기 어려워집니다.</div>
+<div class="label">순수 Domain 객체: 발행 규칙만 보관</div>
+<pre><code>public final class CourseDraft {
+  private String title;
+  private List&lt;Lesson&gt; lessons;
+  private boolean published;
+
+  public void rename(String next) {
+    if (next == null || next.isBlank())
+      throw new InvalidCourseTitleException();
+    if (published) throw new PublishedCourseEditException();
+    title = next;
+  }
+
+  public void publish() {
+    if (lessons.isEmpty()) throw new MissingLessonException();
+    published = true;
+  }
+}</code></pre>
+<p>위 모델은 JPA·SQL·HTTP를 모릅니다. Domain이 보호하는 것은 <b>"유효하지 않은 Course가 발행되지 않는다"</b> 같은 업무 불변식입니다. 실제 완성 코드에는 생성 시점과 모든 변경 경로의 불변식도 보호해야 합니다.</p>
+<div class="two-ver"><div><b>DB version</b>낙관적 잠금용</div><div><b>CourseVersion</b>콘텐츠 발행본 식별</div><div><b>Product snapshot</b>학습용 읽기 데이터</div></div>
+<div class="callout good"><strong>꼭 구분:</strong> JPA <code>@Version</code>의 동시성용 숫자와 콘텐츠의 비즈니스 발행 버전은 다릅니다. 이름이 'version'이라도 해결하는 문제가 다릅니다.</div>
+<h3>2-3. 면접에서 판단할 기준</h3>
+<details><summary>Q. Course 안에 모든 Lesson을 넣는 것이 DDD인가요?</summary><p>아닙니다. Aggregate는 단순한 객체 묶음이 아니라 단일 일관성 경계입니다. 전체 발행 규칙과 차시 편집 경합, 데이터 로딩 비용을 보고 범위를 결정해야 합니다.</p></details>
+<details><summary>Q. Entity와 Value Object는 무엇이 다른가요?</summary><p>Entity는 고유 식별성과 생명주기가 중요합니다. Value Object는 값의 의미와 불변성이 중요합니다. 예를 들어 CourseId는 식별자 값 객체, LessonOrder는 순서 규칙을 캡슐화하는 값 객체로 모델링할 수 있습니다.</p></details>
+<details><summary>Q. Domain Event는 Kafka 이벤트와 같은가요?</summary><p>Domain Event는 'CoursePublished' 같은 업무 사실을 표현합니다. Kafka는 이를 외부로 전달하는 기술적 수단 중 하나입니다. 모든 도메인 이벤트가 Kafka에 발행될 필요는 없습니다.</p></details>
 </section>
-<section class="lesson" id="clean"><span class="tag">Clean Architecture</span><h2>04. 계층 분리와 로직 오염 방지</h2>
-<p>Controller 안에 발행 규칙, JPA 쿼리, 이벤트 전송이 모두 섞이면 변경 이유가 서로 다른 코드가 한 곳에 모입니다. <b>비즈니스 규칙이 기술 구현에 끌려다니지 않도록</b> 의존성을 설계합니다.</p>
-<div class="flow2"><div class="flow bad"><div class="flow-title">결합도가 높은 구현</div><div class="node">Controller</div><div class="down">↓</div><div class="node">규칙 검사 + JPA + Kafka</div><div class="down">↓</div><div class="node">변경 영향이 퍼짐</div></div><div class="flow ok"><div class="flow-title">책임 분리 구현</div><div class="node">Web Adapter</div><div class="down">↓</div><div class="node">Application UseCase</div><div class="down">↓</div><div class="node">Domain / Port</div><div class="down">↑ 구현</div><div class="node">JPA Adapter</div></div></div>
-<div class="scroll"><table><tr><th>계층</th><th>해야 할 일</th><th>섞지 말 것</th></tr><tr><td>Web</td><td>HTTP 입력과 응답</td><td>코스 발행 업무 규칙</td></tr><tr><td>Application</td><td>유스케이스 순서, 트랜잭션</td><td>SQL, HTTP 상세 구현</td></tr><tr><td>Domain</td><td>코스 변경·발행 규칙</td><td>JpaRepository, KafkaTemplate</td></tr><tr><td>Adapter</td><td>JPA/외부 연동</td><td>업무 정책의 단독 결정</td></tr></table></div>
-<pre><code>interface CourseRepository {
-    VersionedCourse load(long id);
-    void save(Course course);
+<section class="card" id="clean"><span class="chapter-no">CHAPTER 03</span> <span class="tag sim">리팩터링 실습</span><h2>Clean Architecture · 로직 오염을 줄이는 방법</h2>
+<p><b>문제:</b> Controller가 발행 조건을 검사하고 직접 JPA를 수정하고 이벤트까지 보내면 업무 규칙·HTTP·DB의 변경 이유가 하나로 섞입니다.</p>
+<div class="cols"><div class="lane err"><h4>변경 전: 관심사가 뒤섞임</h4><div class="node">CourseController</div><div class="arrow">↓</div><div class="node">검증 + JPA + HTTP + Kafka</div><div class="arrow">↓</div><div class="node">한 변경이 다른 기능에 전파</div></div><div class="lane ok"><h4>변경 후: 변경 이유를 분리</h4><div class="node">Web Adapter → UseCase</div><div class="arrow">↓</div><div class="node">Domain Rule + Repository Port</div><div class="arrow">↑ 인터페이스 구현</div><div class="node">JPA Adapter / 외부 전송</div></div></div>
+<h3>3-1. 나쁜 코드에서 어떤 문제가 보이나요?</h3>
+<pre><code>@PutMapping("/course/{id}/publish")
+public void publish(@PathVariable Long id) {
+  var entity = jpaRepo.findById(id).orElseThrow();
+  if (entity.getLessons().isEmpty()) throw new RuntimeException();
+  entity.setPublished(true);  // 도메인 규칙
+  jpaRepo.save(entity);       // 영속성
+  kafkaTemplate.send("published", id); // 외부 전송
+}</code></pre>
+<p>이 구조에서는 배치에서도 같은 발행 규칙을 재사용하려면 로직을 다시 작성할 위험이 있습니다. DB 방식이나 외부 이벤트 발행 정책 변경도 HTTP 계층을 흔듭니다.</p>
+<h3>3-2. 계층 책임과 의존성 화살표</h3>
+<div class="cols3 compact"><div class="mini-card"><b>Web</b><p>DTO, HTTP 상태, 인증 정보 전달</p></div><div class="mini-card"><b>Application</b><p>유스케이스, 작업 순서, 트랜잭션</p></div><div class="mini-card"><b>Domain</b><p>발행 불변식·상태 전이</p></div><div class="mini-card"><b>Port</b><p>저장·연동에 필요한 계약</p></div><div class="mini-card"><b>Adapter</b><p>JPA, 메시징, 외부 API 구현</p></div><div class="mini-card"><b>Test</b><p>도메인 단위·통합·구조 검증</p></div></div>
+<div class="callout"><strong>중요:</strong> 실행 흐름은 UseCase가 Adapter를 호출하지만, 소스 코드 의존성은 Adapter가 Port 인터페이스를 구현하도록 반전시킵니다.</div>
+<div class="label">패키지 구조 (교육용)</div>
+<pre><code>course/
+├── domain/
+│   ├── CourseDraft.java
+│   └── CourseStatus.java
+├── application/
+│   ├── PublishCourseUseCase.java
+│   └── CourseRepository.java   // Port
+└── adapter/
+    ├── in/web/CourseController.java
+    └── out/jpa/
+        ├── CourseJpaEntity.java
+        └── CourseJpaAdapter.java</code></pre>
+<div class="label">Port는 내부 계층의 계약</div>
+<pre><code>public interface CourseRepository {
+  CourseDraft load(long courseId);
+  void save(CourseDraft course);
 }
 
-// Application은 JPA 구현체 대신 Port에 의존
-class EditCourseUseCase {
-    private final CourseRepository repository;
-}</code></pre>
-<div class="call good"><strong>설계 목적:</strong> DB·프레임워크 교체에 따른 영향 범위를 줄이고, 업무 규칙을 단독 테스트하며, 변경 이유가 다른 코드의 결합을 줄입니다.</div>
-</section>
-<section class="lesson" id="cqrs"><span class="tag">CQRS 사고법</span><h2>05. 코스 편집과 목록 조회가 왜 달라야 할까?</h2>
-<p><b>Command</b>는 코스 수정 규칙을 지키고, <b>Query</b>는 화면에 필요한 데이터만 읽습니다. 두 작업의 목적이 다르기 때문에 같은 모델을 강제로 사용할 필요가 없습니다.</p>
-<div class="flow2"><div class="flow ok"><div class="flow-title">Write · Command</div><div class="node">EditCourseUseCase</div><div class="down">↓</div><div class="node">Course.rename()</div><div class="down">↓</div><div class="node">JPA @Version 검사</div></div><div class="flow"><div class="flow-title">Read · Query</div><div class="node">GetCourseList</div><div class="down">↓</div><div class="node">CourseListDto Projection</div><div class="down">↓</div><div class="node">빠른 목록 응답</div></div></div>
-<pre><code>// Command: 규칙을 지키면서 상태 변경
-course.rename("Java 실무 과정");
+class PublishCourseUseCase {
+  private final CourseRepository courses;
 
-// Query: 목록에 필요한 필드만 반환
+  @Transactional
+  public void publish(long id) {
+    CourseDraft draft = courses.load(id);
+    draft.publish();            // 도메인 규칙
+    courses.save(draft);        // 기술 구현 몰라도 됨
+  }
+}</code></pre>
+<h3>3-3. 요구사항 변경 실험: 어떤 파일이 바뀌어야 할까?</h3>
+<div class="buttons" role="group" aria-label="변경 요구사항"><button class="btn selected" data-change="db">JPA → MyBatis</button><button class="btn" data-change="rule">발행 규칙 추가</button><button class="btn" data-change="http">응답 JSON 변경</button><button class="btn" data-change="flow">발행 절차 변경</button></div>
+<div class="stage"><div class="label" id="change-label">DB 기술 변경</div><div class="db" id="change-target">Persistence Adapter 중심</div><div class="status" id="change-reason">Domain의 발행 조건을 유지하면서 JPA 매핑과 Repository 구현을 MyBatis 구현으로 교체하도록 설계합니다.</div></div>
+<div class="callout warn"><strong>반론도 알아야 합니다.</strong> 모든 CRUD에 Domain, Port, Adapter를 만들면 클래스와 변환 코드가 많아집니다. 복잡한 비즈니스 규칙, 장기 변경 비용, 팀 규모에 맞게 도입해야 합니다.</div>
+<h3>3-4. 설계가 지켜지는지 검증</h3>
+<pre><code>@Test
+void 모듈_의존성_규칙을_검증한다() {
+  ApplicationModules.of(LmsApplication.class).verify();
+}</code></pre>
+<p>Spring Modulith로 모듈 경계를 검사하거나 ArchUnit으로 Domain이 JPA·HTTP 패키지를 참조하지 못하게 규칙을 작성할 수 있습니다. 위 테스트는 Spring Modulith를 설정한 프로젝트에서 사용하는 예시입니다.</p>
+</section>
+<section class="card" id="cqrs"><span class="chapter-no">CHAPTER 04</span> <span class="tag sim">CMS 버전 발행에서 확장한 설계 연습</span><h2>CQRS · 쓰기 모델과 읽기 모델 분리</h2>
+<p><b>문제:</b> 관리자의 코스 편집은 규칙 검증과 버전 관리가 필요하지만, 학습자가 코스를 조회할 때는 이미 발행된 빠르고 안정적인 형태의 데이터가 필요할 수 있습니다.</p>
+<div class="cols"><div class="lane ok"><h4>Command / 편집 경로</h4><div class="node">EditCourse / PublishCourse</div><div class="arrow">↓</div><div class="node">CourseDraft 규칙 검증</div><div class="arrow">↓</div><div class="node">발행본 생성</div></div><div class="lane"><h4>Query / 조회 경로</h4><div class="node">GetCourse / Product API</div><div class="arrow">↓</div><div class="node">PublishedCourse Projection</div><div class="arrow">↓</div><div class="node">학습자가 버전 조회</div></div></div>
+<div class="callout good"><strong>실무와 가상 모델 구분:</strong> CMS 3.0에서 콘텐츠 버전과 Product API를 다룬 경험은 실제입니다. 아래 Draft → PublishedCourse → 읽기 전용 Projection을 'CQRS를 적용했다'고 단정하는 것은 아니며 이해를 위한 설계 예제입니다.</div>
+<h3>4-1. 발행 버전 실험</h3>
+<p>운영 중인 학습자에게는 v3가 고정돼 있고, 관리자는 v4 초안을 수정 중이라고 가정합니다.</p>
+<div class="cols"><div class="mini-card"><b>관리자 · Draft</b><p id="draft-state">v4: 새 차시 추가, 발행 대기</p></div><div class="mini-card"><b>Product API · Published</b><p id="published-state">v3: 기존 발행본</p></div></div>
+<div class="stage"><div class="label">기존 수강생의 조회 결과</div><div class="db" id="learner-state">고정된 v3 조회</div><div class="status" id="publish-status">새로운 편집 내용은 기존 수강생에게 반영되지 않습니다.</div></div>
+<div class="buttons"><button class="btn primary" id="publish-next">관리자: v4 발행</button><button class="btn" id="new-learner">새 수강생 조회</button><button class="btn" id="publish-reset">↺ 초기화</button></div>
+<div class="callout warn"><b>버전 정책을 구분하세요:</b> 모든 콘텐츠를 최신으로 조회할지, 학습 구조를 버전 고정할지, 일부 에셋만 최신 참조할지는 명시적인 업무 정책입니다. 위 시뮬레이션은 버전 고정 정책의 예입니다.</div>
+<h3>4-2. CQRS는 분산 시스템을 의미하지 않습니다</h3>
+<div class="scroll"><table><thead><tr><th>선택</th><th>언제 적합한가</th><th>문제점·주의사항</th></tr></thead><tbody><tr><td>단일 모델 CRUD</td><td>읽기와 쓰기가 단순할 때</td><td>규칙과 화면 조회가 결합될 수 있음</td></tr><tr><td>단일 DB CQRS</td><td>쓰기 규칙과 조회 최적화가 다를 때</td><td>DTO·Query 서비스 코드 증가</td></tr><tr><td>별도 Read Model</td><td>매우 다른 읽기 성능·확장 요구</td><td>갱신 지연, 재동기화, 운영 부담</td></tr></tbody></table></div>
+<div class="label">쓰기와 읽기의 코드상 차이</div>
+<pre><code>// Command: 규칙을 통해 상태 변경
+course.publish();
+
+// Query: 목록에 필요한 컬럼만 투영
 SELECT new CourseListDto(c.id, c.title, c.status)
-FROM CourseJpaEntity c</code></pre>
-<div class="call">CQRS는 Kafka, Event Sourcing, 별도 Read DB가 없어도 적용할 수 있습니다. 한 PostgreSQL에서 읽기와 쓰기 모델만 구분하는 것이 가장 쉬운 시작입니다.</div>
+FROM CourseJpaEntity c
+WHERE c.deleted = false</code></pre>
+<h3>4-3. 별도 Read Model이라면 어떤 장애가 생길까?</h3>
+<div class="cols"><div class="mini-card err"><b>발행 DB 저장 성공 → 이벤트 전송 실패</b><p>쓰기 모델은 v4인데 읽기 모델은 v3에 남을 수 있습니다.</p></div><div class="mini-card ok"><b>Transactional Outbox + 소비자 멱등성</b><p>같은 DB 트랜잭션에 이벤트 기록을 남겨 재전송을 가능하게 하고 중복 적용을 제어하는 설계를 고려합니다.</p></div></div>
+<div class="callout"><strong>왜 바로 Kafka를 쓰지 않을까?</strong> 동일 DB의 Projection으로 충분한 경우라면 단순하게 유지합니다. 독립적인 서비스·처리량·비동기 요구가 확인될 때 이벤트 전달을 검토합니다.</div>
+<h3>4-4. 테스트할 정책</h3><div class="checklist"><label><input type="checkbox"> v4 발행 이후에도 기존 수강생은 약속된 v3를 볼 수 있는가?</label><label><input type="checkbox"> 편집 중인 Draft는 Product API에 노출되지 않는가?</label><label><input type="checkbox"> 발행본 생성 실패 시 중간 상태가 노출되지 않는가?</label><label><input type="checkbox"> Read Model 갱신 지연 시 일관성 정책을 설명할 수 있는가?</label></div>
 </section>
-<section class="lesson" id="interview"><span class="tag real">실무 면접 대비</span><h2>06. 설계 이유를 답할 수 있어야 한다</h2>
-<div class="call good"><b>30~60초 답변 예시</b><br>“휴넷 CMS 3.0 러닝빌더에서 여러 관리자가 하나의 코스를 동시에 수정할 수 있었습니다. 나중에 저장한 변경이 먼저 저장된 내용을 덮어쓰는 위험을 줄이기 위해 낙관적 잠금을 사용했습니다. JPA 변경 감지로 영속 엔티티 수정 내용을 저장하고, 버전 기반 충돌 감지로 데이터 정합성을 고려했습니다. 이 방식은 편집 시간 내내 DB 잠금을 유지하지 않으면서 저장 시 충돌을 확인할 수 있다는 장점이 있습니다. 다만 코스와 차시의 충돌 범위를 어디까지 볼지는 Aggregate 경계와 함께 판단해야 합니다.”</div>
-<details open><summary>Q1. Dirty Checking과 낙관적 잠금은 같은 기능인가요?</summary><p>아닙니다. Dirty Checking은 변경 내용을 DB에 반영하고, 낙관적 잠금은 오래된 버전에 기반한 갱신 충돌을 감지합니다.</p></details>
-<details><summary>Q2. @Version을 붙였는데도 덮어쓰기가 발생할 수 있나요?</summary><p>예. 오래된 브라우저 화면에서 저장할 때마다 서버가 최신 엔티티를 재조회한 후 이전 값을 복사하면 @Version 검사만으로 화면의 오래된 상태를 구별할 수 없습니다. 사용자가 처음 본 버전을 요청에 포함시켜 검사합니다.</p></details>
-<details><summary>Q3. 비관적 잠금 대신 낙관적 잠금을 선택한 이유는?</summary><p>웹 편집 화면은 열어두는 시간이 길어 DB 락을 계속 점유하는 구조가 부담스럽습니다. 낙관적 잠금은 보통 충돌이 많지 않은 상황에서 저장 시점을 기준으로 감지하며, 발생한 충돌은 사용자에게 안내해 해결합니다.</p></details>
-<details><summary>Q4. Course와 Lesson 중 어느 쪽을 Aggregate로 만드나요?</summary><p>하나의 트랜잭션에서 반드시 함께 지켜야 하는 불변식을 기준으로 정합니다. 전체 차시 순서와 발행 규칙은 코스 차원의 판단이 필요할 수 있지만, 독립 편집이 많다면 충돌 범위를 잘게 나누는 설계도 고려합니다.</p></details>
-<details><summary>Q5. Clean Architecture와 DDD, CQRS는 각각 무엇인가요?</summary><p>DDD는 업무 모델과 불변식의 경계를, Clean Architecture는 기술로부터 비즈니스 코드의 의존성을 보호하는 구조를, CQRS는 상태 변경과 읽기 목적의 모델 분리를 담당합니다.</p></details>
-<div class="call warn"><b>사실과 예시의 구분</b><br>사용자의 실제 경험: 러닝빌더 동시 편집 덮어쓰기 방지를 위한 낙관적 잠금과 JPA 변경 감지 사용.<br>학습용 가정: v7/v8, 409 응답, 구체적 DTO·메서드·@Version 선언, 테스트 코드. 당시 구현했다고 단정하지 마세요.</div>
+<section class="card" id="interview"><span class="chapter-no">FINAL PRACTICE</span><h2>면접에서 '왜 그 설계였나요?'에 답하는 법</h2>
+<div class="callout good"><strong>실제 경험에 기반한 1분 답변</strong><br>“휴넷 CMS 3.0 러닝빌더에서는 여러 관리자가 동일 코스를 동시에 편집할 수 있었습니다. 나중에 저장한 변경 내용이 먼저 저장된 작업을 덮어쓰는 위험을 줄이기 위해 낙관적 잠금을 적용했고, JPA 변경 감지로 엔티티의 수정 사항을 반영했습니다. 중요한 것은 어떤 기술을 썼다는 사실보다 여러 사용자의 변경이 충돌하는 상황에서 데이터 정합성을 고려했다는 점입니다. 또한 잠금 범위를 코스 전체로 볼지 차시별로 볼지는 업무 규칙과 동시 편집 방식에 따라 판단해야 합니다.”</div>
+<h3>꼬리질문 훈련</h3>
+<details open><summary>Q1. 왜 비관적 잠금이 아니라 낙관적 잠금이었나요?</summary><p>웹 편집기에서는 화면을 열어두는 시간이 길기 때문에 그 기간 DB 잠금을 유지하는 방식은 부담이 큽니다. 저장 시점에 충돌을 확인하는 낙관적 잠금이 합리적인 후보입니다. 다만 실제 충돌 빈도와 UX를 고려해야 합니다.</p></details>
+<details><summary>Q2. @Transactional만 붙이면 Lost Update를 방지하나요?</summary><p>아닙니다. 일반적인 트랜잭션만으로 모든 갱신 손실을 자동 차단할 수는 없습니다. 격리 수준과 DB 동시성 동작을 확인하고 버전 검사나 잠금·조건부 UPDATE를 설계해야 합니다.</p></details>
+<details><summary>Q3. Dirty Checking은 save()와 어떻게 다른가요?</summary><p>Dirty Checking은 영속성 컨텍스트가 관리하는 엔티티의 상태 변경을 Flush할 때 UPDATE로 반영합니다. Spring Data JPA의 save()는 새 엔티티 등록 또는 merge 등 용도로 쓰이며, 이미 관리되는 엔티티를 수정한 경우 매번 save()가 필요한 것은 아닙니다.</p></details>
+<details><summary>Q4. Course의 @Version으로 모든 Lesson 수정이 보호되나요?</summary><p>자식이 별도 엔티티라면 그렇지 않을 수 있습니다. 부모 버전 증가 정책과 Aggregate 일관성 경계를 명시해야 합니다.</p></details>
+<details><summary>Q5. DDD와 Clean Architecture의 차이는 뭔가요?</summary><p>DDD는 업무 언어·모델·불변식의 경계를 정하고, Clean Architecture는 그 모델을 HTTP·DB 같은 기술 구현 의존성에서 보호하는 구조를 정합니다. 서로 다른 문제를 해결하므로 함께 활용할 수 있습니다.</p></details>
+<details><summary>Q6. CQRS는 Kafka와 별도 DB를 요구하나요?</summary><p>아닙니다. 같은 DB를 사용하더라도 Query와 Command의 책임과 모델을 분리할 수 있습니다. 읽기 모델을 분리할 때만 동기화와 최종 일관성 문제를 추가로 다루면 됩니다.</p></details>
+<h3>내 답변 메모</h3><p class="sm muted">실제 면접이라고 생각하고 30초~1분 답변을 적어보세요. 이 페이지는 입력 내용을 서버에 전송하지 않습니다.</p>
+<textarea id="practice" placeholder="문제: ...&#10;선택: ...&#10;다른 대안: ...&#10;방지한 위험: ...&#10;한계와 검증: ..."></textarea><p class="caption" id="wordcount">0자 작성</p>
+<h3>학습 완료 체크리스트</h3><div class="checklist"><label><input type="checkbox"> 실제 수행한 업무와 학습용 가상 구현을 구분해 설명한다.</label><label><input type="checkbox"> Dirty Checking, @Version, expectedVersion의 역할을 구분한다.</label><label><input type="checkbox"> 낙관적 잠금·비관적 잠금·조건부 UPDATE 대안을 비교한다.</label><label><input type="checkbox"> Aggregate의 크기와 코스·차시 불변식의 관계를 설명한다.</label><label><input type="checkbox"> Clean Architecture에서 실행 흐름과 의존성 방향을 구분한다.</label><label><input type="checkbox"> CQRS와 콘텐츠 발행 버전 정책의 차이를 설명한다.</label><label><input type="checkbox"> 실패 테스트와 동시성 테스트를 어떻게 설계할지 설명한다.</label></div>
+<div class="callout warn"><strong>사실성 주의:</strong> 본 사이트의 코스 ID, v7/v8, SQL 예시, expectedVersion 요청 형식, 화면 충돌 UI 및 구체적인 클래스 이름은 실습용입니다. 실제 당시 처리했다고 말하려면 소스나 기록으로 확인된 범위만 사용하세요.</div>
 </section>
-<div class="footer">MY ARCH LAB · 개인 학습용 · 실무 사실과 교육용 가상 예제 분리<br>© Educational prototype</div>
+<div class="end">MY ARCH LAB 2.0 · 실제 경력 기반 설계 학습<br>본 문서는 실무 설명과 별도 가상 기술 실습을 구분합니다.</div>
 </main>
 <script>
 (function(){
- var tabs=[].slice.call(document.querySelectorAll('[data-show]'));
- var sections=[].slice.call(document.querySelectorAll('.lesson'));
- function openTab(id){
-   tabs.forEach(function(t){t.setAttribute('aria-current',String(t.getAttribute('data-show')===id));});
-   sections.forEach(function(s){s.hidden=(s.id!==id)});
-   window.scrollTo({top:0,behavior:'instant'});
+'use strict';
+var modes=[].slice.call(document.querySelectorAll('[data-mode]')),mode='both',step=0;
+var $=function(id){return document.getElementById(id)};
+function paintSim(){
+ var result='',name='',title='',version='';
+ if(step===0){name='시작 · 두 관리자가 v7 조회';title='Java 기초 과정';version=mode==='none'?'버전 추적 없음':'DB version 7';result='① A 저장을 눌러 진행해 보세요.';}
+ if(step===1){name='① A가 먼저 저장 완료';title='Java 실무 과정';version=mode==='none'?'버전 추적 없음':'DB version 8';result='B의 브라우저에는 여전히 v7에서 편집한 내용이 있습니다.';}
+ if(step===2){name='② B가 오래된 화면으로 저장 요청';
+   if(mode==='both'){title='Java 실무 과정';version='DB version 8';result='✅ expectedVersion(7) ≠ DB version(8) → 409 충돌. A의 변경 유지.';}
+   else if(mode==='jpa'){title='Java 입문 과정';version='DB version 9';result='⚠ 저장 요청에서 서버가 최신 v8을 다시 읽고 B의 값을 적용하면 @Version이 있어도 덮을 수 있습니다.';}
+   else{title='Java 입문 과정';version='버전 추적 없음';result='⚠ B가 A의 변경을 덮어썼습니다 (Lost Update 위험).';}
  }
- tabs.forEach(function(t){t.addEventListener('click',function(){openTab(t.getAttribute('data-show'))})});
- openTab('sim');
- var mode='safe',step=0;
- var modeButtons=[].slice.call(document.querySelectorAll('[data-mode]'));
- var title=document.getElementById('dbtitle'),version=document.getElementById('dbversion'),status=document.getElementById('result'),name=document.getElementById('stepname'),next=document.getElementById('next');
- function render(){
-  if(step===0){title.textContent='Java 기초 과정';version.textContent=mode==='none'?'버전 관리 없음':'DB version 7';name.textContent='초기 상태 · A와 B가 v7을 읽음';status.textContent='관리자 A가 먼저 저장하도록 진행하세요.'}
-  if(step===1){title.textContent='Java 실무 과정';version.textContent=mode==='none'?'버전 관리 없음':'DB version 8';name.textContent='① 관리자 A 저장 완료';status.textContent='B의 편집 화면에는 여전히 v7 데이터가 남아 있습니다.'}
-  if(step===2){name.textContent='② 관리자 B가 오래된 화면으로 저장 시도'; if(mode==='safe'){title.textContent='Java 실무 과정';version.textContent='DB version 8';status.textContent='✔ 버전 충돌 감지! B 저장 거절 → A의 변경 유지';status.className='result goodtext'}else{title.textContent='Java 입문 과정';version.textContent=mode==='only'?'DB version 9':'버전 관리 없음';status.textContent=mode==='only'?'⚠ @Version이 있어도 서버가 최신 v8을 다시 조회해 B의 오래된 값을 적용하면 v9 저장이 가능합니다.':'⚠ 관리자 A의 제목이 B의 저장으로 덮였습니다.';status.className='result danger'}}
-  if(step<2)status.className='result';
-  next.textContent=step===0?'① A 저장 →':step===1?'② B 저장 →':'실험 완료';
-  next.disabled=step===2;
-  modeButtons.forEach(function(b){b.classList.toggle('sel',b.getAttribute('data-mode')===mode)})
- }
- modeButtons.forEach(function(b){b.addEventListener('click',function(){mode=b.getAttribute('data-mode');step=0;render()})});
- document.getElementById('reset').addEventListener('click',function(){step=0;render()});
- next.addEventListener('click',function(){step=Math.min(2,step+1);render()});
- render();
+ $('sim-stage').textContent=name;$('sim-title').textContent=title;$('sim-version').textContent=version;$('sim-result').textContent=result;
+ $('sim-result').className='status'+(step===2?(mode==='both'?' success':' danger'):'');
+ $('sim-next').textContent=step===0?'① A 저장 →':step===1?'② B 저장 →':'실험 완료';
+ $('sim-next').disabled=step===2;
+ modes.forEach(function(b){b.classList.toggle('selected',b.dataset.mode===mode)});
+}
+modes.forEach(function(b){b.addEventListener('click',function(){mode=b.dataset.mode;step=0;paintSim()})});
+$('sim-reset').addEventListener('click',function(){step=0;paintSim()});
+$('sim-next').addEventListener('click',function(){step=Math.min(2,step+1);paintSim()});
+paintSim();
+var scopeButtons=[].slice.call(document.querySelectorAll('[data-scope]'));
+scopeButtons.forEach(function(b){b.addEventListener('click',function(){
+var whole=b.dataset.scope==='course';
+$('scope-title').textContent=whole?'코스 전체 버전이 충돌':'차시별로 독립 저장 가능';
+$('scope-body').textContent=whole?'전체 차시 구성의 일관성을 보호하는 대신, 서로 다른 차시를 수정해도 충돌이 날 수 있습니다.':'서로 다른 차시의 충돌을 줄입니다. 다만 전체 발행 규칙과 차시 순서의 일관성을 추가로 보장해야 합니다.';
+scopeButtons.forEach(function(n){n.classList.toggle('selected',n===b)});
+})});
+var changes={db:['DB 기술 변경','Persistence Adapter 중심','Domain의 발행 조건을 유지하면서 JPA 매핑과 Repository 구현을 MyBatis 구현으로 교체하도록 설계합니다.'],rule:['비즈니스 규칙 변경','Domain 중심','차시가 없는 코스는 발행할 수 없다는 업무 정책이 바뀐다면 Domain 규칙과 Domain Test를 수정합니다.'],http:['HTTP 표현 변경','Web Adapter 중심','응답 필드 이름이나 상태 코드를 바꾸더라도 Course 도메인 모델과 DB를 바꿀 필요가 없도록 합니다.'],flow:['유스케이스 절차 변경','Application 중심','발행 전에 권한 확인과 검수 단계를 추가한다면 Application의 작업 순서를 변경하고 필요한 정책을 조합합니다.']};
+var changeBtns=[].slice.call(document.querySelectorAll('[data-change]'));
+changeBtns.forEach(function(b){b.addEventListener('click',function(){var c=changes[b.dataset.change];$('change-label').textContent=c[0];$('change-target').textContent=c[1];$('change-reason').textContent=c[2];changeBtns.forEach(function(n){n.classList.toggle('selected',n===b)})})});
+var published=false,who='existing';
+function paintPub(){
+ $('draft-state').textContent=published?'v4: 발행 완료':'v4: 새 차시 추가, 발행 대기';
+ $('published-state').textContent=published?'v4: 새 발행본 제공':'v3: 기존 발행본';
+ $('learner-state').textContent=who==='existing'?'고정된 v3 조회':(published?'새 수강생 → v4':'새 수강생 → v3');
+ $('publish-status').textContent=who==='existing'?(published?'v4가 발행돼도 기존 수강생은 정책에 따라 v3를 유지합니다.':'새 편집 내용은 기존 수강생에게 노출되지 않습니다.'):(published?'새로 시작한 학습은 발행된 v4를 참조합니다.':'새로 시작한 학습도 현재 발행본 v3를 참조합니다.');
+ $('publish-next').disabled=published;
+}
+$('publish-next').addEventListener('click',function(){published=true;paintPub()});
+$('new-learner').addEventListener('click',function(){who=who==='existing'?'new':'existing';this.textContent=who==='existing'?'새 수강생 조회':'기존 수강생 조회';paintPub()});
+$('publish-reset').addEventListener('click',function(){published=false;who='existing';$('new-learner').textContent='새 수강생 조회';paintPub()});paintPub();
+$('practice').addEventListener('input',function(){$('wordcount').textContent=this.value.length+'자 작성'});
 })();
-</script>
-</body></html>
+</script></body></html>
